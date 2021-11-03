@@ -32,7 +32,13 @@ class userController {
 
     async deleteUser (req, res) {
         try {
+            const { username } = req.body;
             
+            await Users.findOneAndDelete({username});
+
+            res.status(200).json({
+                result: `User ${username} deleted`
+            })
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
