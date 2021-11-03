@@ -61,7 +61,18 @@ class userController {
 
     async updateUser (req, res) {
         try {
-            
+            const data = req.body;
+            const filter = data.username;
+
+            const updateUser = await Users.findOneAndUpdate(filter, data, {
+                new: true
+            });
+
+            res.status(200).json({
+                result: 'User Updated',
+                user: updateUser
+            })
+
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
