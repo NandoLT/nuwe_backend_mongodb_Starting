@@ -46,7 +46,14 @@ class userController {
 
     async getUser (req, res) {
         try {
-            
+            const { username } = req.params;
+
+            const user = await Users.find({ username })
+
+            res.status(200).json({
+                result: 'User found',
+                user: user
+            })
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
