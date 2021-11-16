@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Users } = require('../models');
 
 class userController {
-
+  
     async getUserSchema (req, res) {
         try {
             const userSchema =  await Users.schema.paths;
@@ -13,17 +13,17 @@ class userController {
             res.status(500).json({ message: error.message });
         }
     }
-    
+
     async addUser (req, res) {
         try {
             const userData = req.body;
 
-            const user = new Users(userData);
+            const { username, age, city } = new Users(userData);
             await user.save();
 
             res.status(200).json({
                 result:'User saved',
-                data: user
+                data: { username, age, city }
             })
         } catch (error) {
             res.status(500).json({ message: error.message });
@@ -46,7 +46,7 @@ class userController {
 
     async getUser (req, res) {
         try {
-            const user= req.params.username;
+            const user = req.params.username;
 
             const getUser = await Users.findOne({ username: user });
 
@@ -68,20 +68,23 @@ class userController {
 
     async updateUser (req, res) {
         try {
-            const data = req.body;
-            const filter = data.username;
+            const { username, ...restparams } = req.body;
+            const filter = { username };
 
-            const updateUser = await Users.findOneAndUpdate(filter, data, {
+            const { age, city } = await Users.findOneAndUpdate(filter, restparams, {
                 new: true
             });
-
+            console.log('AGE CITY', age, city)
             res.status(200).json({
                 result: 'User Updated',
-                user: updateUser
+                user: {username, age, city}
             })
 
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({ 
+                message: error.message,
+            });
+            
         }
     }
 }
