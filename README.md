@@ -7,7 +7,9 @@ Sistema de gestión básico de usuarios.
 ## API
 
 Para conocer en detalle los diferentes endpoints de la API se ha documentado con swagger.
-[Api-DOC](https://localhost:4000/api-docs)
+Clona o descarga el repositorio para poder acceder a la documentación.<br>
+https://localhost:4000/api-docs
+![Screenshot](swagger_doc.PNG)
 
 ## Installation
 
